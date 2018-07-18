@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<package  xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>caseware.commandline</id>
+    <version>0.1.0</version>
+    <title>Command Line parser</title>
+    <authors>wawa64</authors>
+    <owners>CaseWare</owners>
+    <licenseUrl></licenseUrl>
+    <projectUrl></projectUrl>
+    <iconUrl></iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Command Line parser that allows for drop in verb modules.</description>
+    <releaseNotes></releaseNotes>
+    <copyright></copyright>
+    <tags></tags>
+    <dependencies>
+      <dependency id="" />
+    </dependencies>
+    <summary></summary>
+  </metadata>
+  <files>
+    <file src="" target="" />
+  </files>
+</package>
