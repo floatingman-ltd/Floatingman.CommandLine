@@ -5,7 +5,7 @@
     <Authors>wawa64</Authors>
     <Company>CaseWare IDEA</Company>
     <Description>Command Line parser that allows for drop in verb modules.</Description>
-    <Version>0.1.0</Version>
+    <Version>0.1.1</Version>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Copyright>(c) 2018 CaseWare IDEA</Copyright>
@@ -13,6 +13,7 @@
     <PackageProjectUrl>https://github.com/CaseWare-Idea/Command-Parser</PackageProjectUrl>
     <RepositoryUrl>https://github.com/CaseWare-Idea/Command-Parser</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <AssemblyVersion>0.1.1.0</AssemblyVersion>
   </PropertyGroup>
 
 </Project>
