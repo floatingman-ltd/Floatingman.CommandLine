@@ -19,9 +19,9 @@ namespace CaseWare.CommandLineParser
                     {typeof(double), v => double.Parse(v)},
                     {typeof(string), v => v},
                     // we are only supporting IEnumerable<> as the collection type
-                    {typeof(IEnumerable<int>), v => v.Split(',').Select(i => int.Parse(i))},
-                    {typeof(IEnumerable<double>), v => v.Split(',').Select(double.Parse)},
-                    {typeof(IEnumerable<string>), v => v.Split(',').Select(i => i)},
+                    {typeof(int[]), v => v.Split(',').Select(i => int.Parse(i)).ToArray()},
+                    {typeof(double[]), v => v.Split(',').Select(double.Parse).ToArray()},
+                    {typeof(string[]), v => v.Split(',').Select(i => i).ToArray()},
                 });
             }
         }
