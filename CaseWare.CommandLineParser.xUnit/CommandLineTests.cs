@@ -251,7 +251,7 @@ namespace CaseWare.CommandLineParser.xUnit
         [InlineData("-e", "3.14")]
         [InlineData("--frog", "sitting on a lily pad")]
         // this needs to work, commented out to get past the gate
-        //[InlineData("-h", "1,1.21")]
+        [InlineData("-h", "1,1.21")]
         public void Parse_will_return_error_list_if_data_not_coercable(params string[] args)
         {
             var parameters = new TestArgs();
@@ -307,9 +307,9 @@ namespace CaseWare.CommandLineParser.xUnit
             [Option("frog")] public double Frog { get; set; }
 
             [Option('g')] public string Goat { get; set; }
-            [Option('h')] public IEnumerable<int> Hog { get; set; }
-            [Option('i')] public IEnumerable<double> Ibis { get; set; }
-            [Option('j')] public IEnumerable<string> Jaguar { get; set; }
+            [Option('h')] public int[] Hog { get; set; }
+            [Option('i')] public double[] Ibis { get; set; }
+            [Option('j')] public string[] Jaguar { get; set; }
             [Option('k', Default = 555)] public int Kangaroo { get; set; }
 
             // arguments
