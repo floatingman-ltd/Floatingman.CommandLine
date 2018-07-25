@@ -10,9 +10,37 @@ From the dotnet cli
 dotnet add package CaseWare.CommandLineParser --version 0.1.0
 ```
 
-> The plugin functionality requires (at this point) an _Dependency Injector (DI)_ (a.k.a. _Inversion of Control (IoC)_).  For the purposes of this example _Simple Injector_ is used, however this should work with any injector or even custom tooling.
+## Anatomy of a command Line
+
+```cmd
+:> sample usage c:/temp/Animals.txt --type file -m "There are dog about" --shouldBeCareful
+// ^      ^     ^                   ^      ^    ^  ^                     ^
+// |      verb  |                   |      |    |  quoted option value   boolean option key
+// driver       positional argument |      |    short option key
+//                                  |      option value
+//                                  long option
+```
+
+### The Parts Defined
+
+There are three parts to the _command_ line implementation:
+
+1. The **driver** is the executable that runs the process, this tool does not affect this.
+2. The **verb** is the argument and command selector.
+3. The remaining items are the arguments, either named or positional.
+   1. Positional arguments are order dependent
+   2. Option arguments are key-value pairs
+   3. Any argument containing a space must be enclosed in quotes
+   4. Boolean option arguments do not require a value and are true if present and false if not present
+   5. Arguments can be the simple types _boolean_, _integer_, _floating point_ or _string_
+   6. Arguments can be arrays of the above simple types, arrays contain values separated by commas
+   7. Option arguments can be either short or long form
+      1. Long form are preceded by `--`
+      2. Short form are preceded by `-`
 
 ### Create a DI Container
+
+> The plugin functionality requires (at this point) an _Dependency Injector (DI)_ (a.k.a. _Inversion of Control (IoC)_).  For the purposes of this example _Simple Injector_ is used, however this should work with any injector or even custom tooling.
 
 We are using package or module registration of the _DI_ container to create plugins.
 

@@ -5,8 +5,18 @@ using System.Reflection;
 
 namespace CaseWare.CommandLineParser
 {
-    public class CommandLine<TArgs> : ICommandLine<TArgs> where TArgs : CommandArgs, new()
+    public sealed class CommandLine : ICommandLine
     {
+
+        private static readonly Lazy<CommandLine> _instance =
+            new Lazy<CommandLine>(() => new CommandLine());
+
+        public static CommandLine Instance { get; } = _instance.Value;
+
+        private CommandLine()
+        {
+        }
+
         private IDictionary<Type, Func<string, object>> _coersionMap;
 
         private IDictionary<Type, Func<string, object>> CoersionMap
@@ -26,7 +36,7 @@ namespace CaseWare.CommandLineParser
             }
         }
 
-        public TArgs Parse(string[] args)
+        public TArgs Parse<TArgs>(string[] args) where TArgs : ICommandArgs, new()
         {
             var parameters = new TArgs();
             // is there a command
@@ -107,24 +117,33 @@ namespace CaseWare.CommandLineParser
                     {
                         // get the first not set positional
                         // this will explode if there is not positional argument to put this in
-                        var positional = arguments.First(a => !a.Argument.IsSet);
-                        positional.Property.SetValue(parameters, CoersionMap[positional.Property.PropertyType](arg));
-                        positional.Argument.IsSet = true;
+                        var (propertyInfo, argumentAttribute) = arguments.First(a => !a.Argument.IsSet);
+                        propertyInfo.SetValue(parameters, CoersionMap[propertyInfo.PropertyType](arg));
+                        argumentAttribute.IsSet = true;
                     }
                 }
             }
-            // we've gone through the args and set what we could - let's look for the required and default values
-            // rather then just exploding it would be nice to form a list of reasons to explode, and then explode
-            parameters.Errors.AddRange(options.Where(o => !o.Option.IsSet && o.Option.IsRequired && o.Property.PropertyType != typeof(bool)).Select(t => $"{t.Option.Name} is required, but not set"));
-            foreach (var optionWithDefault in options.Where(o => !o.Option.IsSet && o.Option.Default != null)) optionWithDefault.Property.SetValue(parameters, optionWithDefault.Option.Default);
 
-            foreach (var argumentsWithRequired in arguments.Where(o => !o.Argument.IsSet && o.Argument.IsRequired && o.Property.PropertyType != typeof(bool))) throw new Exception("kaboom?");
-            foreach (var argumentsWithDefault in arguments.Where(o => !o.Argument.IsSet && o.Argument.Default != null)) argumentsWithDefault.Property.SetValue(parameters, argumentsWithDefault.Argument.Default);
+            // rather then just exploding it would be nice to form a list of reasons to explode, and then explode
+            // test for required options
+            parameters.Errors.AddRange(options.Where(o => !o.Option.IsSet && o.Option.IsRequired && o.Property.PropertyType != typeof(bool)).Select(t => $"{t.Option.Name} is required, but not set"));
+
+            // set default values
+            foreach (var (propertyInfo, optionAttribute) in options.Where(o => !o.Option.IsSet && o.Option.Default != null))
+                propertyInfo.SetValue(parameters, optionAttribute.Default);
+
+            // test for required arguments
+            if (arguments.Any(o => !o.Argument.IsSet && o.Argument.IsRequired && o.Property.PropertyType != typeof(bool)))
+                throw new Exception("kaboom?");
+
+            // set default values
+            foreach (var (propertyInfo, argumentAttribute) in arguments.Where(o => !o.Argument.IsSet && o.Argument.Default != null))
+                propertyInfo.SetValue(parameters, argumentAttribute.Default);
 
             return parameters;
         }
 
-        private List<(PropertyInfo Property, ArgumentAttribute Argument)> GetArgumentsFromAttributes(TArgs parameters) =>
+        private List<(PropertyInfo Property, ArgumentAttribute Argument)> GetArgumentsFromAttributes<TArgs>(TArgs parameters) =>
             parameters
                 .GetType()
                 .GetProperties()
@@ -132,7 +151,7 @@ namespace CaseWare.CommandLineParser
                 .Select(p => (Property: p, Argument: p.GetCustomAttributes(true).OfType<ArgumentAttribute>().Single()))
                 .ToList();
 
-        private (Type Class, CommandAttribute Command) GetCommandFromAttributes(TArgs parameters) =>
+        private (Type Class, CommandAttribute Command) GetCommandFromAttributes<TArgs>(TArgs parameters) =>
             parameters
                 .GetType()
                 .GetCustomAttributes(true)
@@ -140,7 +159,7 @@ namespace CaseWare.CommandLineParser
                 .Select(c => (Class: parameters.GetType(), Command: c))
                 .SingleOrDefault();
 
-        private List<(PropertyInfo Property, OptionAttribute Option)> GetOptionsFromAttributes(TArgs parameters) =>
+        private List<(PropertyInfo Property, OptionAttribute Option)> GetOptionsFromAttributes<TArgs>(TArgs parameters) =>
             parameters
                 .GetType()
                 .GetProperties()

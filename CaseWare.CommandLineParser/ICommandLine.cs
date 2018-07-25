@@ -1,7 +1,7 @@
 ﻿namespace CaseWare.CommandLineParser
 {
-    public interface ICommandLine<out TArgs> where TArgs : ICommandArgs
+    public interface ICommandLine
     {
-        TArgs Parse(string[] args);
+        TArgs Parse<TArgs>(string[] args) where TArgs : ICommandArgs,new();
     }
 }

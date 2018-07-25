@@ -7,10 +7,11 @@
 
     public interface IPlugin
     {
-        string Name { get; set; }
 
         string Execute();
 
         string Execute(string args);
+
+        string Name { get; }
     }
 }

@@ -1,5 +1,5 @@
 using FluentAssertions;
-using System.Collections.Generic;
+using Moq;
 using Xunit;
 
 namespace CaseWare.CommandLineParser.xUnit
@@ -9,12 +9,13 @@ namespace CaseWare.CommandLineParser.xUnit
         [Fact]
         public void Parse_accepts_commands()
         {
-            var args = new string[] { "azalea" };
-            new CommandTestArgs();
+            // This is a sample of what the test would look like if the input data were mocked.
+            // var args = new string[] { "azalea" };
 
-            var cl = new CommandLine<CommandTestArgs>();
+            var args = new Mock<string[]>();
+            args.Setup(a => a[0]).Returns("azalea");
 
-            var parameters = cl.Parse(args);
+            var parameters = CommandLine.Instance.Parse<CommandTestArgs>(args.Object);
 
             parameters.Command.Should().Be("azalea");
         }
@@ -24,9 +25,7 @@ namespace CaseWare.CommandLineParser.xUnit
         {
             var args = new string[] { "-e", "123", "shark attack" };
 
-            var cl = new CommandLine<TestArgs>();
-
-            var parameters = cl.Parse(args);
+            var parameters = CommandLine.Instance.Parse<TestArgs>(args);
 
             parameters.Shark.Should().Be("shark attack");
         }
@@ -36,9 +35,7 @@ namespace CaseWare.CommandLineParser.xUnit
         {
             var args = new string[] { "-a", "shark attack" };
 
-            var cl = new CommandLine<TestArgs>();
-
-            var parameters = cl.Parse(args);
+            var parameters = CommandLine.Instance.Parse<TestArgs>(args);
 
             parameters.Shark.Should().Be("shark attack");
         }
@@ -48,9 +45,7 @@ namespace CaseWare.CommandLineParser.xUnit
         {
             var args = new string[] { "--dog" };
 
-            var cl = new CommandLine<TestArgs>();
-
-            var parameters = cl.Parse(args);
+            var parameters = CommandLine.Instance.Parse<TestArgs>(args);
 
             parameters.Dog.Should().BeTrue();
         }
@@ -60,9 +55,7 @@ namespace CaseWare.CommandLineParser.xUnit
         {
             var args = new string[] { "-b" };
 
-            var cl = new CommandLine<TestArgs>();
-
-            var parameters = cl.Parse(args);
+            var parameters = CommandLine.Instance.Parse<TestArgs>(args);
 
             parameters.Baboon.Should().BeTrue();
         }
@@ -72,8 +65,7 @@ namespace CaseWare.CommandLineParser.xUnit
         {
             var args = new string[] { "-i", "1.23,4.56" };
 
-            var cl = new CommandLine<TestArgs>();
-            var parameters = cl.Parse(args);
+            var parameters = CommandLine.Instance.Parse<TestArgs>(args);
 
             parameters.Ibis.Should().Equal(1.23, 4.56);
         }
@@ -83,9 +75,7 @@ namespace CaseWare.CommandLineParser.xUnit
         {
             var args = new string[] { "-h", "123,456,789" };
 
-            var cl = new CommandLine<TestArgs>();
-
-            var parameters = cl.Parse(args);
+            var parameters = CommandLine.Instance.Parse<TestArgs>(args);
 
             parameters.Hog.Should().Equal(123, 456, 789);
         }
@@ -95,9 +85,7 @@ namespace CaseWare.CommandLineParser.xUnit
         {
             var args = new string[] { "-j", "there,are,dogs,about" };
 
-            var cl = new CommandLine<TestArgs>();
-
-            var parameters = cl.Parse(args);
+            var parameters = CommandLine.Instance.Parse<TestArgs>(args);
 
             parameters.Jaguar.Should().Equal("there", "are", "dogs", "about");
         }
@@ -107,9 +95,7 @@ namespace CaseWare.CommandLineParser.xUnit
         {
             var args = new string[] { "--frog", "123.456" };
 
-            var cl = new CommandLine<TestArgs>();
-
-            var parameters = cl.Parse(args);
+            var parameters = CommandLine.Instance.Parse<TestArgs>(args);
 
             parameters.Frog.Should().Be(123.456);
         }
@@ -119,9 +105,7 @@ namespace CaseWare.CommandLineParser.xUnit
         {
             var args = new string[] { "-e", "123" };
 
-            var cl = new CommandLine<TestArgs>();
-
-            var parameters = cl.Parse(args);
+            var parameters = CommandLine.Instance.Parse<TestArgs>(args);
 
             parameters.Elephant.Should().Be(123);
         }
@@ -131,9 +115,7 @@ namespace CaseWare.CommandLineParser.xUnit
         {
             var args = new string[] { "-g", "will eat anything" };
 
-            var cl = new CommandLine<TestArgs>();
-
-            var parameters = cl.Parse(args);
+            var parameters = CommandLine.Instance.Parse<TestArgs>(args);
 
             parameters.Goat.Should().Be("will eat anything");
         }
@@ -143,9 +125,7 @@ namespace CaseWare.CommandLineParser.xUnit
         {
             var args = new string[] { "shark attack" };
 
-            var cl = new CommandLine<TestArgs>();
-
-            var parameters = cl.Parse(args);
+            var parameters = CommandLine.Instance.Parse<TestArgs>(args);
 
             parameters.Shark.Should().Be("shark attack");
         }
@@ -155,9 +135,7 @@ namespace CaseWare.CommandLineParser.xUnit
         {
             var args = new string[] { "shark attack", "123" };
 
-            var cl = new CommandLine<TestArgs>();
-
-            var parameters = cl.Parse(args);
+            var parameters = CommandLine.Instance.Parse<TestArgs>(args);
 
             parameters.Shark.Should().Be("shark attack");
             parameters.Tiger.Should().Be(123);
@@ -168,11 +146,10 @@ namespace CaseWare.CommandLineParser.xUnit
         {
             var args = new string[] { "--zoo" };
 
-            var cl = new CommandLine<TestArgs>();
+            var parameters = CommandLine.Instance.Parse<TestArgs>(args);
 
-            var testArgs = cl.Parse(args);
-            testArgs.Errors.Should().NotBeEmpty();
-            testArgs.Errors[0].Should().Be("zoo is not recognized");
+            parameters.Errors.Should().NotBeEmpty();
+            parameters.Errors[0].Should().Be("zoo is not recognized");
         }
 
         [Fact]
@@ -180,9 +157,7 @@ namespace CaseWare.CommandLineParser.xUnit
         {
             var args = new string[] { "-j", "shark attack" };
 
-            var cl = new CommandLine<TestArgs>();
-
-            var parameters = cl.Parse(args);
+            var parameters = CommandLine.Instance.Parse<TestArgs>(args);
 
             parameters.Jaguar.Should().Equal("shark attack");
         }
@@ -192,9 +167,7 @@ namespace CaseWare.CommandLineParser.xUnit
         {
             var args = new string[0];
 
-            var cl = new CommandLine<TestArgs>();
-
-            var parameters = cl.Parse(args);
+            var parameters = CommandLine.Instance.Parse<TestArgs>(args);
 
             parameters.Kangaroo.Should().Be(555);
         }
@@ -204,11 +177,10 @@ namespace CaseWare.CommandLineParser.xUnit
         {
             var args = new string[0];
 
-            var cl = new CommandLine<TestRequiredArgs>();
+            var parameters = CommandLine.Instance.Parse<TestRequiredArgs>(args);
 
-            var testArgs = cl.Parse(args);
-            testArgs.Errors.Should().NotBeEmpty();
-            testArgs.Errors[0].Should().Be("Airplane is required, but not set");
+            parameters.Errors.Should().NotBeEmpty();
+            parameters.Errors[0].Should().Be("Airplane is required, but not set");
         }
 
         [Theory]
@@ -216,9 +188,7 @@ namespace CaseWare.CommandLineParser.xUnit
         [InlineData("--cat")]
         public void Parse_will_accept_either_long_or_short_form(params string[] args)
         {
-            var cl = new CommandLine<TestArgs>();
-
-            var parameters = cl.Parse(args);
+            var parameters = CommandLine.Instance.Parse<TestArgs>(args);
 
             parameters.Cat.Should().BeTrue();
         }
@@ -228,20 +198,18 @@ namespace CaseWare.CommandLineParser.xUnit
         {
             var args = new string[] { "-b", "-b" };
 
-            var cl = new CommandLine<TestArgs>();
+            var parameters = CommandLine.Instance.Parse<TestArgs>(args);
 
-            var testArgs = cl.Parse(args);
-            testArgs.Errors.Should().NotBeEmpty();
-            testArgs.Errors[0].Should().Be("b is duplicated");
+            parameters.Errors.Should().NotBeEmpty();
+            parameters.Errors[0].Should().Be("b is duplicated");
         }
 
         [Fact]
         public void Parse_will_not_honor_IsRequired_on_bool()
         {
             var args = new string[0];
-            var cl = new CommandLine<TestArgs>();
 
-            var parameters = cl.Parse(args);
+            var parameters = CommandLine.Instance.Parse<TestArgs>(args);
 
             parameters.Aardvark.Should().BeFalse();
         }
@@ -250,17 +218,13 @@ namespace CaseWare.CommandLineParser.xUnit
         [InlineData("-e", "eating peanuts")]
         [InlineData("-e", "3.14")]
         [InlineData("--frog", "sitting on a lily pad")]
-        // this needs to work, commented out to get past the gate
         [InlineData("-h", "1,1.21")]
         public void Parse_will_return_error_list_if_data_not_coercable(params string[] args)
         {
-            var parameters = new TestArgs();
+            var parameters = CommandLine.Instance.Parse<TestArgs>(args);
 
-            var cl = new CommandLine<TestArgs>();
-
-            var testArgs = cl.Parse(args);
-            testArgs.Errors.Should().NotBeEmpty();
-            testArgs.Errors[0].Should().StartWith($"[{args[1]}] cannot be converted to");
+            parameters.Errors.Should().NotBeEmpty();
+            parameters.Errors[0].Should().StartWith($"[{args[1]}] cannot be converted to");
         }
 
         [Fact]
@@ -268,11 +232,10 @@ namespace CaseWare.CommandLineParser.xUnit
         {
             var args = new string[] { "--cat", "--cat" };
 
-            var cl = new CommandLine<TestArgs>();
+            var parameters = CommandLine.Instance.Parse<TestArgs>(args);
 
-            var testArgs = cl.Parse(args);
-            testArgs.Errors.Should().NotBeEmpty();
-            testArgs.Errors[0].Should().Be("cat is duplicated");
+            parameters.Errors.Should().NotBeEmpty();
+            parameters.Errors[0].Should().Be("cat is duplicated");
         }
 
         [Fact]
@@ -280,11 +243,10 @@ namespace CaseWare.CommandLineParser.xUnit
         {
             var args = new string[] { "-c", "--cat" };
 
-            var cl = new CommandLine<TestArgs>();
+            var parameters = CommandLine.Instance.Parse<TestArgs>(args);
 
-            var testArgs = cl.Parse(args);
-            testArgs.Errors.Should().NotBeEmpty();
-            testArgs.Errors[0].Should().Be("cat is duplicated");
+            parameters.Errors.Should().NotBeEmpty();
+            parameters.Errors[0].Should().Be("cat is duplicated");
         }
 
         [Command("plants")]
@@ -294,6 +256,7 @@ namespace CaseWare.CommandLineParser.xUnit
 
         private class TestArgs : CommandArgs
         {
+            // options
             [Option('a', IsRequired = true)] public bool Aardvark { get; set; }
 
             [Option('b')] public bool Baboon { get; set; }
@@ -307,9 +270,13 @@ namespace CaseWare.CommandLineParser.xUnit
             [Option("frog")] public double Frog { get; set; }
 
             [Option('g')] public string Goat { get; set; }
+
             [Option('h')] public int[] Hog { get; set; }
+
             [Option('i')] public double[] Ibis { get; set; }
+
             [Option('j')] public string[] Jaguar { get; set; }
+
             [Option('k', Default = 555)] public int Kangaroo { get; set; }
 
             // arguments

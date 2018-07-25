@@ -2,7 +2,7 @@
 
 namespace CaseWare.CommandLineParser.Parser
 {
-    public interface IArgs : IEnumerable<string>
+    public interface IArgs : IList<string>
     {
     }
 }
