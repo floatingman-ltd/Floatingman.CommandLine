@@ -10,6 +10,7 @@ From the dotnet cli
 dotnet add package CaseWare.CommandLineParser --version 0.1.0
 ```
 
+=======
 ## Anatomy of a command Line
 
 ```cmd
