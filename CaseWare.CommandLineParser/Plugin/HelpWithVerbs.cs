@@ -7,9 +7,12 @@ namespace CaseWare.CommandLineParser.Plugin
     {
         private readonly IEnumerable<IPlugin> _verbs;
 
-        public HelpWithVerbs(IArgs rawArgs, ICommand<HelpArgs> command, ICommandLine commandLine) : base(rawArgs, command, commandLine)
+
+        public HelpWithVerbs(IArgs rawArgs, ICommand<HelpArgs> command, ICommandLine<HelpArgs> commandLine) : base(rawArgs, command, commandLine)
         {
         }
+
+        public override string Name { get; set; } = "help";
 
 
         public override string Execute(string args)
