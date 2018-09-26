@@ -13,5 +13,6 @@ namespace CaseWare.CommandLineParser
 
         public string LongForm { get; }
         public char ShortForm { get; }
+        public bool AllowMultiple { get; set; } = false;
     }
 }

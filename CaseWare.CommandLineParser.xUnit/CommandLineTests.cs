@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using FluentAssertions;
+using Microsoft.VisualBasic;
 using Moq;
 using Xunit;
 
@@ -239,7 +241,18 @@ namespace CaseWare.CommandLineParser.xUnit
         }
 
         [Fact]
-        public void Parse_will_throw_an_exception_if_multiple_parameters_have_same_option()
+        public void Parse_will_throw_an_exception_if_multiple_parameters_have_same_string_option()
+        {
+            var args = new string[] { "-g", "rex", "-g", "fido" };
+
+            var parameters = CommandLine.Instance.Parse<TestArgs>(args);
+
+            parameters.Errors.Should().NotBeEmpty();
+            parameters.Errors[0].Should().Be("goat is duplicated");
+        }
+
+        [Fact]
+        public void Parse_will_throw_an_exception_if_multiple_parameters_have_same_boolean_option()
         {
             var args = new string[] { "-c", "--cat" };
 
@@ -247,6 +260,17 @@ namespace CaseWare.CommandLineParser.xUnit
 
             parameters.Errors.Should().NotBeEmpty();
             parameters.Errors[0].Should().Be("cat is duplicated");
+        }
+
+        [Fact]
+        public void Parse_will_allow_multiple_parameters_with_same_name()
+        {
+            var args = new string[] { "-c", "Fluffy", "--cat", "Mittens" };
+
+            var parameters = CommandLine.Instance.Parse<MultipleTestArgs>(args);
+
+            parameters.Errors.Should().BeEmpty();
+            parameters.Cat[0].Should().Be("Fluffy");
         }
 
         [Command("plants")]
@@ -289,5 +313,10 @@ namespace CaseWare.CommandLineParser.xUnit
         {
             [Option("airplane", Default = 777, IsRequired = true, Name = "Airplane")] public int Airplane { get; set; }
         }
+    }
+
+    internal class MultipleTestArgs : CommandArgs
+    {
+        [Option('c', "cat", AllowMultiple = true)] public string[] Cat { get; set; }
     }
 }
