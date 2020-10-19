@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/CaseWare.CommandLineParser.xUnit/CaseWare.CommandLineParser.xUnit.csproj"
+                "${workspaceFolder}/Floatingman.CommandLineParser.xUnit/Floatingman.CommandLineParser.xUnit.csproj"
             ],
             "problemMatcher": "$msCompile"
         }

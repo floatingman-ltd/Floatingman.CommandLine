@@ -7,10 +7,11 @@ A command line parser - **console is the new UI**.
 From the dotnet cli
 
 ```ps
-dotnet add package CaseWare.CommandLineParser --version 0.1.0
+dotnet add package Floatingman.CommandLineParser --version 0.1.0
 ```
 
-=======
+---
+
 ## Anatomy of a command Line
 
 ```cmd
