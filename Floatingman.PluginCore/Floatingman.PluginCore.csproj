@@ -1,30 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
-    <RootNamespace>Floatingman.IdeaCommandLine.Plugins</RootNamespace>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>Floatingman.Cli.Plugins</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Floatingman.CommandLineParser" Version="0.1.0" />
     <PackageReference Include="SimpleInjector" Version="4.3.0" />
     <PackageReference Include="SimpleInjector.Packaging" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Floatingman.CommandLineParser\Floatingman.CommandLineParser.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="commandline">
-      <HintPath>C:\Users\walt.speelman.IDEA\.nuget\packages\commandlineparser\2.2.1\lib\netstandard1.5\CommandLine.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>C:\Users\walt.speelman.IDEA\.nuget\packages\newtonsoft.json\11.0.2\lib\netstandard2.0\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="SimpleInjector">
-      <HintPath>C:\Users\walt.speelman.IDEA\.nuget\packages\simpleinjector\4.3.0\lib\netstandard1.3\SimpleInjector.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>
