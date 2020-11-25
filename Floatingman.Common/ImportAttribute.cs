@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Floatingman.IdeaCommandLine.Plugins
+namespace Floatingman.CommandLine.Plugins
 {
     public class ImportAttribute : Attribute
     {
