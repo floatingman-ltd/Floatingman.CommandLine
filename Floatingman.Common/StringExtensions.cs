@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace Floatingman.CommandLine.Plugins
+namespace Floatingman.Common
 {
     public static class StringExtensions
     {

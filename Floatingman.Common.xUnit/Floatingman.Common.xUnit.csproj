@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Floatingman.CommandLineParser\Floatingman.CommandLineParser.csproj" />
+    <ProjectReference Include="..\Floatingman.Common\Floatingman.Common.csproj" />
   </ItemGroup>
 
 </Project>

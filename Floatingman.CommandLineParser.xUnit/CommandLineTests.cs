@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using FluentAssertions;
-using Microsoft.VisualBasic;
 using Moq;
 using Xunit;
 
@@ -11,13 +9,9 @@ namespace Floatingman.CommandLineParser.xUnit
         [Fact]
         public void Parse_accepts_commands()
         {
-            // This is a sample of what the test would look like if the input data were mocked.
-            // var args = new string[] { "azalea" };
+            var args = new string[] { "azalea" };
 
-            var args = new Mock<string[]>();
-            args.Setup(a => a[0]).Returns("azalea");
-
-            var parameters = CommandLine.Instance.Parse<CommandTestArgs>(args.Object);
+            var parameters = CommandLine.Instance.Parse<CommandTestArgs>(args);
 
             parameters.Command.Should().Be("azalea");
         }
@@ -93,7 +87,7 @@ namespace Floatingman.CommandLineParser.xUnit
         }
 
         [Fact]
-        public void Parse_should_get_an_double()
+        public void Parse_should_get_a_double()
         {
             var args = new string[] { "--frog", "123.456" };
 
@@ -113,7 +107,7 @@ namespace Floatingman.CommandLineParser.xUnit
         }
 
         [Fact]
-        public void Parse_should_get_an_string()
+        public void Parse_should_get_a_string()
         {
             var args = new string[] { "-g", "will eat anything" };
 
@@ -248,7 +242,7 @@ namespace Floatingman.CommandLineParser.xUnit
             var parameters = CommandLine.Instance.Parse<TestArgs>(args);
 
             parameters.Errors.Should().NotBeEmpty();
-            parameters.Errors[0].Should().Be("goat is duplicated");
+            parameters.Errors[0].Should().Be("g is duplicated");
         }
 
         [Fact]
@@ -263,14 +257,27 @@ namespace Floatingman.CommandLineParser.xUnit
         }
 
         [Fact]
-        public void Parse_will_allow_multiple_parameters_with_same_name()
+        public void Parse_will_allow_multiple_string_parameters_with_same_name()
         {
             var args = new string[] { "-c", "Fluffy", "--cat", "Mittens" };
 
             var parameters = CommandLine.Instance.Parse<MultipleTestArgs>(args);
 
             parameters.Errors.Should().BeEmpty();
+            parameters.Cat.Length.Should().Be(2);
             parameters.Cat[0].Should().Be("Fluffy");
+        }
+
+        [Fact]
+        public void Parse_will_allow_multiple_double_parameters_with_same_name()
+        {
+            var args = new string[] { "-d", "3.2", "--dog", "6.505" };
+
+            var parameters = CommandLine.Instance.Parse<MultipleTestArgs>(args);
+
+            parameters.Errors.Should().BeEmpty();
+            parameters.Dog.Length.Should().Be(2);
+            parameters.Dog[0].Should().Be(3.2);
         }
 
         [Command("plants")]
@@ -318,5 +325,6 @@ namespace Floatingman.CommandLineParser.xUnit
     internal class MultipleTestArgs : CommandArgs
     {
         [Option('c', "cat", AllowMultiple = true)] public string[] Cat { get; set; }
+        [Option('d', "dog", AllowMultiple = true)] public double[] Dog { get; set; }
     }
 }
