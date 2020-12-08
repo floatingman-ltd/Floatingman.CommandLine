@@ -22,7 +22,5 @@ namespace Floatingman.TopologyTools.GenerateHexArray
         public string Command { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public List<string> Errors => new List<string>();
-
-        // public List<string> Errors = new List<string>();
     }
 }
