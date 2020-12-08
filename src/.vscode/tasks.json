@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/example/Floatingman.TopologyTools/Floatingman.TopologyTools.csproj",
+                "${workspaceFolder}/Floatingman.CommandLineParser.xUnit/Floatingman.CommandLineParser.xUnit.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -19,7 +19,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/Floatingman.CommandLine.UsageConsole/Floatingman.CommandLine.UsageConsole.csproj",
+                "${workspaceFolder}/Floatingman.CommandLineParser.xUnit/Floatingman.CommandLineParser.xUnit.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -32,7 +32,7 @@
             "args": [
                 "watch",
                 "run",
-                "${workspaceFolder}/Floatingman.CommandLine.UsageConsole/Floatingman.CommandLine.UsageConsole.csproj",
+                "${workspaceFolder}/Floatingman.CommandLineParser.xUnit/Floatingman.CommandLineParser.xUnit.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
