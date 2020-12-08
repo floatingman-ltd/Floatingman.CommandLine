@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Floatingman.CommandLine.UsagePlugin\Floatingman.CommandLine.UsagePlugin.csproj" />
+    <ProjectReference Include="..\..\src\Floatingman.CommandLineParser\Floatingman.CommandLineParser.csproj" />
   </ItemGroup>
 
 </Project>

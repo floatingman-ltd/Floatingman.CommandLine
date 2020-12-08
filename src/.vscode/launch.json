@@ -10,12 +10,18 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/example/Floatingman.TopologyTools/bin/Debug/net5.0/Floatingman.TopologyTools.dll",
+            "program": "${workspaceFolder}/Floatingman.CommandLineParser.xUnit/bin/Debug/net5.0/Floatingman.CommandLineParser.xUnit.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/example/Floatingman.TopologyTools",
+            "cwd": "${workspaceFolder}/Floatingman.CommandLineParser.xUnit",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
             "stopAtEntry": false
+        },
+        {
+            "name": ".NET Core Attach",
+            "type": "coreclr",
+            "request": "attach",
+            "processId": "${command:pickProcess}"
         }
     ]
 }

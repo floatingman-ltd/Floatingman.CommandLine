@@ -2,7 +2,7 @@
 
 namespace Floatingman.CommandLineParser
 {
-    public abstract class CommandArgs : ICommandArgs
+    public class CommandArgs : ICommandArgs
     {
         public string Command { get; set; }
 

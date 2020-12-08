@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <!--
     <Authors>Floatingman IT Consulting</Authors>
     <Company>Floatingman IT Consulting</Company>
     <Description>Command Line parser that allows for drop in verb modules.</Description>
@@ -14,6 +15,8 @@
     <RepositoryUrl>https://github.com/64-Code-Amusements/cli</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <AssemblyVersion>0.1.2.0</AssemblyVersion>
+
+    -->
   </PropertyGroup>
 
 </Project>
