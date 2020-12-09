@@ -6,17 +6,14 @@
     <Company>Floatingman IT Consulting</Company>
     <Description>Command Line parser that allows for drop in verb modules.</Description>
     <Version>0.1.2</Version>
+    <PackageLicenseExpression>WTFPL</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Copyright>(c) 2020 Floatingman</Copyright>
-    <PackageLicenseUrl>https://github.com/64-Code-Amusements/cli/Command-Parser/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/64-Code-Amusements/cli</PackageProjectUrl>
     <RepositoryUrl>https://github.com/64-Code-Amusements/cli</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <AssemblyVersion>0.1.2.0</AssemblyVersion>
-
-    <!--
-    -->
   </PropertyGroup>
 
 </Project>
