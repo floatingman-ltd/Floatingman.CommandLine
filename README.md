@@ -1,5 +1,7 @@
 # Command-Parser
 
+![.NET Core](https://github.com/64-Code-Amusements/Floatingman.CommandLine/workflows/.NET%20Core/badge.svg)
+
 A command line parser - **console is the new UI**.
 
 ## Usage:
