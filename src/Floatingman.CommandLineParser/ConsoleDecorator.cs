@@ -1,6 +1,11 @@
 using System;
 using System.Threading.Tasks;
+using System.Reflection;
+using System.Collections.Generic;
+
 using Floatingman.CommandLineParser.Parser;
+using System.IO;
+using System.Linq;
 
 namespace Floatingman.CommandLineParser
 {
@@ -40,7 +45,7 @@ namespace Floatingman.CommandLineParser
       }
 
       // public static Command<TParams> LoadCommand<TParams>(string commandName) where TParams: CommandArgs, new()
-      public static Command<TParams> LoadCommand<TParams>(string commandName)where TParams : CommandArgs, new()
+      public static Command<TParams> LoadCommand<TParams>(string commandName) where TParams : CommandArgs, new()
       {
          throw new NotImplementedException(nameof(LoadCommand));
          // get the plugin and load it
@@ -67,6 +72,50 @@ namespace Floatingman.CommandLineParser
       // {
       //    throw new System.NotImplementedException();
       // }
+      protected static Assembly LoadPlugin(string relativePath)
+      {
+         // Navigate up to the solution root
+         string root = Path.GetFullPath(Path.Combine(
+             Path.GetDirectoryName(
+                 Path.GetDirectoryName(
+                     Path.GetDirectoryName(
+                         Path.GetDirectoryName(
+                             Path.GetDirectoryName(typeof(ConsoleDecorator).Assembly.Location)))))));
+
+         string pluginLocation = Path.GetFullPath(Path.Combine(root, relativePath.Replace('\\', Path.DirectorySeparatorChar)));
+         Console.WriteLine($"Loading commands from: {pluginLocation}");
+         PluginLoadContext loadContext = new PluginLoadContext(pluginLocation);
+         return loadContext.LoadFromAssemblyName(new AssemblyName(Path.GetFileNameWithoutExtension(pluginLocation)));
+      }
+
+      protected static IEnumerable<ICommand> CreateCommands(Assembly assembly)
+      {
+         int count = 0;
+
+         foreach (Type type in assembly.GetTypes())
+         {
+            // if (type.GetInterface("ICommand`1",true) != null)
+            if (typeof(ICommand).IsAssignableFrom(type))
+            {
+               Console.WriteLine(type.Name);
+               // var result = type.GetMethod("Factory",BindingFlags.Public|BindingFlags.Static).Invoke(null,null);
+               var result = Activator.CreateInstance(type) as ICommand;
+               if (result != null)
+               {
+                  count++;
+                  yield return result;
+               }
+            }
+         }
+
+         if (count == 0)
+         {
+            string availableTypes = string.Join(",", assembly.GetTypes().Select(t => t.FullName));
+            throw new ApplicationException(
+                $"Can't find any type which implements ICommand in {assembly} from {assembly.Location}.\n" +
+                $"Available types: {availableTypes}");
+         }
+      }
    }
 
 }
