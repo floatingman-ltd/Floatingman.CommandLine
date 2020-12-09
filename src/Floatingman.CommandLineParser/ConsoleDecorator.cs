@@ -12,66 +12,59 @@ namespace Floatingman.CommandLineParser
    public abstract class ConsoleDecorator
    {
 
-      public ICommandArgs Parameters { get; set; }
-
       static ConsoleDecorator()
       {
          // find the plugins - the current usage will hard code the expected file name pattern as *.Plugin.dll
-         var plugins = DiscoverPlugins();
       }
 
       public static void Run(string[] args)
       {
-         // var command = LoadCommand(args[0]);
-         // var parameters = Parse(command, args);
-         // Execute(command, parameters);
+         try
+         {
+            // this list needs to come from the a configuration file
+            // https://docs.microsoft.com/en-us/dotnet/core/extensions/options
+            string[] pluginPaths = new string[]
+            {
+                    @"Floatingman.CommandLine.Command\bin\Debug\net5.0\\Floatingman.CommandLine.Command.dll"
+            };
+
+            var commands = pluginPaths.SelectMany(pluginPath =>
+            {
+               Assembly pluginAssembly = LoadPlugin(pluginPath);
+               return CreateCommands(pluginAssembly);
+            }).ToList();
+
+            if (args.Length == 0)
+            {
+               Console.WriteLine("Commands: ");
+               foreach (var command in commands)
+               {
+                  Console.WriteLine($"{command.Name}\t - {command.ShortHelp}");
+               }
+            }
+            else
+            {
+               var command = commands.FirstOrDefault(c => c.Name == args[0]);
+               // if (command == null)
+               // {
+               //     Console.WriteLine("No such command is known.");
+               //     return;
+               // }
+
+               Console.WriteLine(command.Execute(args));
+            }
+         }
+         catch (Exception ex)
+         {
+            Console.WriteLine(ex);
+         }
       }
-
-      // private static ICommandArgs Parse(Command command, string[] args)
-      // {
-      //    return command.Parse(args);
-      // }
-      // public static string Execute(Command command, ICommandArgs parameters)
-      // {
-      //    return command.Execute(parameters);
-      // }
-
-      private static TParams Parse<TParams>(string[] args) where TParams : CommandArgs, new()
-      {
-         // parse the command name from the args 
-         var commandName = args[0];
-
-         return CommandLine.Instance.Parse<TParams>(args);
-      }
-
-      // public static Command<TParams> LoadCommand<TParams>(string commandName) where TParams: CommandArgs, new()
-      public static Command<TParams> LoadCommand<TParams>(string commandName) where TParams : CommandArgs, new()
-      {
-         throw new NotImplementedException(nameof(LoadCommand));
-         // get the plugin and load it
-         // return LoadPlugin(commandName);
-      }
-
-      // private static void Execute<TParams>(TParams parameters) where TParams : ICommandArgs
-      // {
-      //    _command.Execute(parameters);
-      // }
-      //    // parse out the commands
-      //    var parameters = command.Parse(args);
-
-      //    // execute
-      //    command.ExecuteCommand(parameters);
-      // }
 
       private static object DiscoverPlugins()
       {
          throw new System.NotImplementedException();
       }
 
-      // private static Command LoadPlugin(string commandName)
-      // {
-      //    throw new System.NotImplementedException();
-      // }
       protected static Assembly LoadPlugin(string relativePath)
       {
          // Navigate up to the solution root
