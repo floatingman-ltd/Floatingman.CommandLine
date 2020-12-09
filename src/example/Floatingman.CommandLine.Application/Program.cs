@@ -22,6 +22,7 @@ namespace AppWithPlugin
                 }
 
 // this list needs to come from the a configuration file
+// https://docs.microsoft.com/en-us/dotnet/core/extensions/options
                 string[] pluginPaths = new string[]
                 {
                     @"Floatingman.CommandLine.Command\bin\Debug\net5.0\\Floatingman.CommandLine.Command.dll"
