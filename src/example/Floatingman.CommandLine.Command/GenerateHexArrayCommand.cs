@@ -18,7 +18,6 @@ namespace Floatingman.TopologyTools.GenerateHexArray
         public string Description => ShortHelp;
 
         public override string Execute(GenerateHexArrayArgs args)
-        // public string Execute(ICommandArgs args)
         {
             var x = args as GenerateHexArrayArgs;
             var sb = new StringBuilder();

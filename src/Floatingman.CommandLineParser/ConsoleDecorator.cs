@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using Floatingman.CommandLineParser.Parser;
 using System.IO;
 using System.Linq;
+using System.IO.Abstractions;
+using Floatingman.Common.Extensions;
 
 namespace Floatingman.CommandLineParser
 {
@@ -14,23 +16,24 @@ namespace Floatingman.CommandLineParser
 
       static ConsoleDecorator()
       {
-         // find the plugins - the current usage will hard code the expected file name pattern as *.Plugin.dll
       }
 
       public static void Run(string[] args)
       {
          try
          {
+
+            var fileSystem = new FileSystem();
+            // var cwd = fileSystem.Directory..GetCurrentDirectory();
+            // System.Reflection.Assembly.GetEntryAssembly().Location.AsJson();
             // this list needs to come from the a configuration file
             // https://docs.microsoft.com/en-us/dotnet/core/extensions/options
-            string[] pluginPaths = new string[]
-            {
-                    @"Floatingman.CommandLine.Command\bin\Debug\net5.0\\Floatingman.CommandLine.Command.dll"
-            };
-
+            // find the plugins - the current usage will hard code the expected file name pattern as ./plugins/*.Command.dll
+            var pluginPaths = fileSystem.Directory.EnumerateFiles("plugins", "*.dll", SearchOption.AllDirectories);
+            pluginPaths.AsJson();
             var commands = pluginPaths.SelectMany(pluginPath =>
             {
-               Assembly pluginAssembly = LoadPlugin(pluginPath);
+               Assembly pluginAssembly = LoadPlugin(pluginPath, fileSystem);
                return CreateCommands(pluginAssembly);
             }).ToList();
 
@@ -65,20 +68,25 @@ namespace Floatingman.CommandLineParser
          throw new System.NotImplementedException();
       }
 
-      protected static Assembly LoadPlugin(string relativePath)
+      protected static Assembly LoadPlugin(string relativePath, FileSystem fileSystem)
       {
-         // Navigate up to the solution root
-         string root = Path.GetFullPath(Path.Combine(
-             Path.GetDirectoryName(
-                 Path.GetDirectoryName(
-                     Path.GetDirectoryName(
-                         Path.GetDirectoryName(
-                             Path.GetDirectoryName(typeof(ConsoleDecorator).Assembly.Location)))))));
+         var x = fileSystem.FileInfo.FromFileName(relativePath).DirectoryName;
 
-         string pluginLocation = Path.GetFullPath(Path.Combine(root, relativePath.Replace('\\', Path.DirectorySeparatorChar)));
-         Console.WriteLine($"Loading commands from: {pluginLocation}");
-         PluginLoadContext loadContext = new PluginLoadContext(pluginLocation);
-         return loadContext.LoadFromAssemblyName(new AssemblyName(Path.GetFileNameWithoutExtension(pluginLocation)));
+         // // Navigate up to the solution root
+         // string root = Path.GetFullPath(Path.Combine(
+         //     Path.GetDirectoryName(
+         //         Path.GetDirectoryName(
+         //             Path.GetDirectoryName(
+         //                 Path.GetDirectoryName(
+         //                     Path.GetDirectoryName(typeof(ConsoleDecorator).Assembly.Location)))))));
+
+         // string pluginLocation = Path.GetFullPath(Path.Combine(root, relativePath.Replace('\\', Path.DirectorySeparatorChar)));
+         // Console.WriteLine($"Loading commands from: {pluginLocation}");
+         // PluginLoadContext loadContext = new PluginLoadContext(pluginLocation);
+         // return loadContext.LoadFromAssemblyName(new AssemblyName(Path.GetFileNameWithoutExtension(pluginLocation)));
+         x.AsJson();
+         PluginLoadContext loadContext = new PluginLoadContext(x);
+         return loadContext.LoadFromAssemblyName(new AssemblyName(Path.GetFileNameWithoutExtension(relativePath)));
       }
 
       protected static IEnumerable<ICommand> CreateCommands(Assembly assembly)

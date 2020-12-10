@@ -16,4 +16,9 @@
     <AssemblyVersion>0.1.2.0</AssemblyVersion>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Floatingman.Common" Version="0.0.2" />
+    <PackageReference Include="system.io.abstractions" Version="13.2.5" />
+  </ItemGroup>
+
 </Project>
