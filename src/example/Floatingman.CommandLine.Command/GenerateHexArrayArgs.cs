@@ -19,7 +19,7 @@ namespace Floatingman.TopologyTools.GenerateHexArray
         [Option('r', "Radius")]
         public double Radius { get; set; }
 
-        public string Command { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string Command { get; set; }= "GenerateHexArray";
 
         public List<string> Errors => new List<string>();
     }

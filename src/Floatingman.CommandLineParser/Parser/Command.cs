@@ -1,4 +1,6 @@
 ﻿
+using Floatingman.Common.Extensions;
+
 namespace Floatingman.CommandLineParser.Parser
 {
    public abstract class Command<TParams> : ICommand<TParams> where TParams : ICommandArgs, new()

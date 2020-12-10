@@ -47,12 +47,11 @@ namespace Floatingman.CommandLineParser
             else
             {
                var command = commands.FirstOrDefault(c => c.Name == args[0]);
-               // if (command == null)
-               // {
-               //     Console.WriteLine("No such command is known.");
-               //     return;
-               // }
-
+               if (command == null)
+               {
+                  Console.WriteLine("No such command is known.");
+                  return;
+               }
                Console.WriteLine(command.Execute(args));
             }
          }
