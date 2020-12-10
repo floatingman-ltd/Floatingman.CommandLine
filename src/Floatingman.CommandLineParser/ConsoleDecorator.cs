@@ -29,8 +29,7 @@ namespace Floatingman.CommandLineParser
             // this list needs to come from the a configuration file
             // https://docs.microsoft.com/en-us/dotnet/core/extensions/options
             // find the plugins - the current usage will hard code the expected file name pattern as ./plugins/*.Command.dll
-            var pluginPaths = fileSystem.Directory.EnumerateFiles("plugins", "*.dll", SearchOption.AllDirectories);
-            pluginPaths.AsJson();
+            var pluginPaths = fileSystem.Directory.EnumerateFiles("plugins", "*.dll", SearchOption.AllDirectories).Where(f => f.Contains(".Command."));
             var commands = pluginPaths.SelectMany(pluginPath =>
             {
                Assembly pluginAssembly = LoadPlugin(pluginPath, fileSystem);
@@ -70,22 +69,7 @@ namespace Floatingman.CommandLineParser
 
       protected static Assembly LoadPlugin(string relativePath, FileSystem fileSystem)
       {
-         var x = fileSystem.FileInfo.FromFileName(relativePath).DirectoryName;
-
-         // // Navigate up to the solution root
-         // string root = Path.GetFullPath(Path.Combine(
-         //     Path.GetDirectoryName(
-         //         Path.GetDirectoryName(
-         //             Path.GetDirectoryName(
-         //                 Path.GetDirectoryName(
-         //                     Path.GetDirectoryName(typeof(ConsoleDecorator).Assembly.Location)))))));
-
-         // string pluginLocation = Path.GetFullPath(Path.Combine(root, relativePath.Replace('\\', Path.DirectorySeparatorChar)));
-         // Console.WriteLine($"Loading commands from: {pluginLocation}");
-         // PluginLoadContext loadContext = new PluginLoadContext(pluginLocation);
-         // return loadContext.LoadFromAssemblyName(new AssemblyName(Path.GetFileNameWithoutExtension(pluginLocation)));
-         x.AsJson();
-         PluginLoadContext loadContext = new PluginLoadContext(x);
+         PluginLoadContext loadContext = new PluginLoadContext(relativePath);
          return loadContext.LoadFromAssemblyName(new AssemblyName(Path.GetFileNameWithoutExtension(relativePath)));
       }
 
