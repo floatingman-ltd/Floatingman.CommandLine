@@ -117,6 +117,7 @@ namespace Floatingman.CommandLineParser
                   if (!options.Any(p => p.Option.LongForm == token || p.Option.ShortForm.ToString() == token))
                   {
                      parameters.Errors.Add($"{token} is not recognized");
+                     // parameters.Errors.Last().AsJson();
                   }
                   else
                   {

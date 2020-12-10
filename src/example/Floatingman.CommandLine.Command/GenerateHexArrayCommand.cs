@@ -18,7 +18,6 @@ namespace Floatingman.TopologyTools.GenerateHexArray
 
         public override string Execute(GenerateHexArrayArgs args)
         {
-            args.AsJson();
             var sb = new StringBuilder();
             for (var u = 0; u < args.Columns; u++)
                 for (var v = 0; v < args.Rows; v++)

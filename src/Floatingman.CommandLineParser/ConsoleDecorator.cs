@@ -61,11 +61,6 @@ namespace Floatingman.CommandLineParser
          }
       }
 
-      private static object DiscoverPlugins()
-      {
-         throw new System.NotImplementedException();
-      }
-
       protected static Assembly LoadPlugin(string relativePath, FileSystem fileSystem)
       {
          PluginLoadContext loadContext = new PluginLoadContext(relativePath);
@@ -78,11 +73,8 @@ namespace Floatingman.CommandLineParser
 
          foreach (Type type in assembly.GetTypes())
          {
-            // if (type.GetInterface("ICommand`1",true) != null)
             if (typeof(ICommand).IsAssignableFrom(type))
             {
-               Console.WriteLine(type.Name);
-               // var result = type.GetMethod("Factory",BindingFlags.Public|BindingFlags.Static).Invoke(null,null);
                var result = Activator.CreateInstance(type) as ICommand;
                if (result != null)
                {
