@@ -2,10 +2,10 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <Authors>Floatingman IT Consulting</Authors>
+    <Authors>Walt &lt;dragon.environment@gmail.com&gt;</Authors>
     <Company>Floatingman IT Consulting</Company>
     <Description>Command Line parser that allows for drop in verb modules.</Description>
-    <Version>0.1.2</Version>
+    <Version>0.2.0</Version>
     <PackageLicenseExpression>WTFPL</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -13,7 +13,7 @@
     <PackageProjectUrl>https://github.com/64-Code-Amusements/cli</PackageProjectUrl>
     <RepositoryUrl>https://github.com/64-Code-Amusements/cli</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <AssemblyVersion>0.1.2.0</AssemblyVersion>
+    <AssemblyVersion>0.2.0.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

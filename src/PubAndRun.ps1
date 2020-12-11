@@ -13,14 +13,11 @@ Set-Location f:\tmp\cmd\
     Floatingman.CommandLine.Application GenerateHexArray -U 2 -V 2 --radius 10 |`
     Floatingman.CommandLine.Application ToWkt 
 ~'
-#  .\Floatingman.CommandLine.Application.exe
-.\Floatingman.CommandLine.Application.exe GenerateHexArray -U 2 -V 2 --radius 10.0
+# .\Floatingman.CommandLine.Application.exe
+# .\Floatingman.CommandLine.Application.exe GenerateHexArray -U 2 -V 2 --radius 10.0
 '~'
-.\Floatingman.CommandLine.Application.exe GenerateHexArray -U 2 -V 2 --radius 10.0 | % {
-$_ | .\Floatingman.CommandLine.Application.exe ToWkt
-}
-#  | % {
-# "10 23" |  .\Floatingman.CommandLine.Application.exe ToWkt 
+# .\Floatingman.CommandLine.Application.exe GenerateHexArray -U 2 -V 2 --radius 10.0 | % { 
+# $_ | .\Floatingman.CommandLine.Application.exe ToWkt
 # }
 "~"
 Set-Location $cwd 

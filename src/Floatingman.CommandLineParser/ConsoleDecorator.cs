@@ -18,7 +18,7 @@ namespace Floatingman.CommandLineParser
       {
       }
 
-      public static void Run(string[] args)
+      public static async Task RunAsync(string[] args)
       {
          try
          {
@@ -52,7 +52,10 @@ namespace Floatingman.CommandLineParser
                   Console.WriteLine("No such command is known.");
                   return;
                }
-               Console.Write(command.Execute(args));
+               await foreach (var r in command.Execute(args))
+               {
+                  Console.Out.WriteLine(r);
+               }
             }
          }
          catch (Exception ex)

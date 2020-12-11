@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-
+using System.Threading.Tasks;
 using Floatingman.CommandLineParser;
 using Floatingman.CommandLineParser.Parser;
 
-namespace AppWithPlugin
+namespace Floatingman.CommandLine.Application
 {
     class Program:ConsoleDecorator
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
-           Run(args); 
+           await RunAsync(args); 
         }
 
     }

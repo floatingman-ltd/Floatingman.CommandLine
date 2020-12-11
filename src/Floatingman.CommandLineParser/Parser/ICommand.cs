@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Floatingman.CommandLineParser.Parser
 {
    public interface ICommand
@@ -5,13 +7,13 @@ namespace Floatingman.CommandLineParser.Parser
       string Name { get; }
       string ShortHelp { get; }
 
-      string Execute(string[] args);
+      IAsyncEnumerable<string> Execute(string[] args);
    }
 
    public interface ICommand<TParams> : ICommand where TParams : ICommandArgs, new()
    {
 
-      string Execute(TParams args);
+      IAsyncEnumerable<string> Execute(TParams args);
       TParams Parse(string[] args);
    }
 

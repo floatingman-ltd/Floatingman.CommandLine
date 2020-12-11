@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Floatingman.Common.Extensions;
 
@@ -11,15 +12,17 @@ namespace Floatingman.CommandLineParser.Parser
 
       public abstract string ShortHelp { get; }
 
-      public abstract string Execute(TParams args);
-      public string Execute(string[] args)
+      public abstract IAsyncEnumerable<string> Execute(TParams args);
+      public IAsyncEnumerable<string> Execute(string[] args)
       {
          string[] fullArgs = null;
-         var hasStream =  Console.IsInputRedirected;//.In.Peek() != -1;
+         var hasStream = Console.IsInputRedirected;//.In.Peek() != -1;
          if (hasStream)
          {
             fullArgs = (args.Clone() as string[]).Concat(Console.In.ReadLine().Split(' ')).ToArray();
-         } else {
+         }
+         else
+         {
             fullArgs = args.Clone() as string[];
          }
          // (new {fullArgs}).AsJson();
@@ -31,7 +34,9 @@ namespace Floatingman.CommandLineParser.Parser
          }
          else
          {
-            return $"Input not in correct format:{System.Environment.NewLine + "\t" + string.Join(System.Environment.NewLine, p.Errors)}";
+            throw new ApplicationException(
+            $"Input not in correct format:{System.Environment.NewLine + "\t" + string.Join(System.Environment.NewLine, p.Errors)}"
+            );
          }
       }
 
