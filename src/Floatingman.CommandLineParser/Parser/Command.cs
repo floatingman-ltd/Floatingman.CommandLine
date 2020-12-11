@@ -1,21 +1,8 @@
 ﻿
+using Floatingman.Common.Extensions;
+
 namespace Floatingman.CommandLineParser.Parser
 {
-   public interface ICommand
-   {
-      string Name { get; }
-      string ShortHelp { get; }
-
-      string Execute(string[] args);
-   }
-
-   public interface ICommand<TParams> : ICommand where TParams : ICommandArgs, new()
-   {
-
-      string Execute(TParams args);
-      TParams Parse(string[] args);
-   }
-
    public abstract class Command<TParams> : ICommand<TParams> where TParams : ICommandArgs, new()
    {
       public abstract string Name { get; }
@@ -26,7 +13,15 @@ namespace Floatingman.CommandLineParser.Parser
       public string Execute(string[] args)
       {
          TParams p = Parse(args);
-         return Execute(p);
+         if (p.Errors.Count == 0)
+         {
+            return Execute(p);
+
+         }
+         else
+         {
+            return $"Input not in correct format:{System.Environment.NewLine + "\t" + string.Join(System.Environment.NewLine, p.Errors)}";
+         }
       }
 
       public TParams Parse(string[] args)

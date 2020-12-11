@@ -5,22 +5,22 @@ using Floatingman.CommandLineParser;
 namespace Floatingman.TopologyTools.GenerateHexArray
 {
 
-    public class GenerateHexArrayArgs : ICommandArgs
-    {
-        // number of rows to generate
-        [Option('U', "Rows")]
-        public int Rows { get; set; }
+   public class GenerateHexArrayArgs : ICommandArgs
+   {
+      // number of rows to generate
+      [Option('U', "rows")]
+      public int Rows { get; set; }
 
-        // number of columns to generate
-        [Option('V', "Columns")]
-        public int Columns { get; set; }
+      // number of columns to generate
+      [Option('V', "columns")]
+      public int Columns { get; set; }
 
-        // radius of the vertices of the hex
-        [Option('r', "Radius")]
-        public double Radius { get; set; }
+      // radius of the vertices of the hex
+      [Option('R', "radius")]
+      public double Radius { get; set; }
 
-        public string Command { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+      public string Command { get; set; } = "GenerateHexArray";
 
-        public List<string> Errors => new List<string>();
-    }
+      public List<string> Errors { get; } = new List<string>();
+   }
 }

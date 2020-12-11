@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using Floatingman.CommandLineParser.Parser;
 using System.IO;
 using System.Linq;
+using System.IO.Abstractions;
+using Floatingman.Common.Extensions;
 
 namespace Floatingman.CommandLineParser
 {
@@ -14,23 +16,23 @@ namespace Floatingman.CommandLineParser
 
       static ConsoleDecorator()
       {
-         // find the plugins - the current usage will hard code the expected file name pattern as *.Plugin.dll
       }
 
       public static void Run(string[] args)
       {
          try
          {
+
+            var fileSystem = new FileSystem();
+            // var cwd = fileSystem.Directory..GetCurrentDirectory();
+            // System.Reflection.Assembly.GetEntryAssembly().Location.AsJson();
             // this list needs to come from the a configuration file
             // https://docs.microsoft.com/en-us/dotnet/core/extensions/options
-            string[] pluginPaths = new string[]
-            {
-                    @"Floatingman.CommandLine.Command\bin\Debug\net5.0\\Floatingman.CommandLine.Command.dll"
-            };
-
+            // find the plugins - the current usage will hard code the expected file name pattern as ./plugins/*.Command.dll
+            var pluginPaths = fileSystem.Directory.EnumerateFiles("plugins", "*.dll", SearchOption.AllDirectories).Where(f => f.Contains(".Command."));
             var commands = pluginPaths.SelectMany(pluginPath =>
             {
-               Assembly pluginAssembly = LoadPlugin(pluginPath);
+               Assembly pluginAssembly = LoadPlugin(pluginPath, fileSystem);
                return CreateCommands(pluginAssembly);
             }).ToList();
 
@@ -45,12 +47,11 @@ namespace Floatingman.CommandLineParser
             else
             {
                var command = commands.FirstOrDefault(c => c.Name == args[0]);
-               // if (command == null)
-               // {
-               //     Console.WriteLine("No such command is known.");
-               //     return;
-               // }
-
+               if (command == null)
+               {
+                  Console.WriteLine("No such command is known.");
+                  return;
+               }
                Console.WriteLine(command.Execute(args));
             }
          }
@@ -60,25 +61,10 @@ namespace Floatingman.CommandLineParser
          }
       }
 
-      private static object DiscoverPlugins()
+      protected static Assembly LoadPlugin(string relativePath, FileSystem fileSystem)
       {
-         throw new System.NotImplementedException();
-      }
-
-      protected static Assembly LoadPlugin(string relativePath)
-      {
-         // Navigate up to the solution root
-         string root = Path.GetFullPath(Path.Combine(
-             Path.GetDirectoryName(
-                 Path.GetDirectoryName(
-                     Path.GetDirectoryName(
-                         Path.GetDirectoryName(
-                             Path.GetDirectoryName(typeof(ConsoleDecorator).Assembly.Location)))))));
-
-         string pluginLocation = Path.GetFullPath(Path.Combine(root, relativePath.Replace('\\', Path.DirectorySeparatorChar)));
-         Console.WriteLine($"Loading commands from: {pluginLocation}");
-         PluginLoadContext loadContext = new PluginLoadContext(pluginLocation);
-         return loadContext.LoadFromAssemblyName(new AssemblyName(Path.GetFileNameWithoutExtension(pluginLocation)));
+         PluginLoadContext loadContext = new PluginLoadContext(relativePath);
+         return loadContext.LoadFromAssemblyName(new AssemblyName(Path.GetFileNameWithoutExtension(relativePath)));
       }
 
       protected static IEnumerable<ICommand> CreateCommands(Assembly assembly)
@@ -87,11 +73,8 @@ namespace Floatingman.CommandLineParser
 
          foreach (Type type in assembly.GetTypes())
          {
-            // if (type.GetInterface("ICommand`1",true) != null)
             if (typeof(ICommand).IsAssignableFrom(type))
             {
-               Console.WriteLine(type.Name);
-               // var result = type.GetMethod("Factory",BindingFlags.Public|BindingFlags.Static).Invoke(null,null);
                var result = Activator.CreateInstance(type) as ICommand;
                if (result != null)
                {
