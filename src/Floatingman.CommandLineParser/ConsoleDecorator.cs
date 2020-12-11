@@ -52,7 +52,7 @@ namespace Floatingman.CommandLineParser
                   Console.WriteLine("No such command is known.");
                   return;
                }
-               Console.WriteLine(command.Execute(args));
+               Console.Write(command.Execute(args));
             }
          }
          catch (Exception ex)

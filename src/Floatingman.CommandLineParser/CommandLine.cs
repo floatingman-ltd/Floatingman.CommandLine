@@ -11,6 +11,7 @@ namespace Floatingman.CommandLineParser
 
       private static readonly Lazy<CommandLine> _instance =
           new Lazy<CommandLine>(() => new CommandLine());
+      private readonly string[] Terminaters = new string[] { "|" };
 
       public static CommandLine Instance { get; } = _instance.Value;
 
@@ -55,6 +56,8 @@ namespace Floatingman.CommandLineParser
          bool isValue = false;
          foreach (var arg in args)
          {
+            // I detest this as much as you do
+            // if (Terminaters.Contains(arg)) break;
             if (command.Command != null && !command.Command.IsSet)
             {
                parameters.Command = arg;
@@ -125,8 +128,9 @@ namespace Floatingman.CommandLineParser
                         ? options.Single(p => p.Option.LongForm == token)
                         // are compound options allowable? like -rm?
                         : options.Single(p => p.Option.ShortForm.ToString() == token);
-                     if (option.Option.IsSet && !option.Option.AllowMultiple) {
-                       parameters.Errors.Add($"{option.Option.LongForm ?? option.Option.ShortForm.ToString()} is duplicated");
+                     if (option.Option.IsSet && !option.Option.AllowMultiple)
+                     {
+                        parameters.Errors.Add($"{option.Option.LongForm ?? option.Option.ShortForm.ToString()} is duplicated");
                      }
                      if (option.Property.PropertyType != typeof(bool))
                      {
@@ -150,6 +154,7 @@ namespace Floatingman.CommandLineParser
                      // get the first not set positional
                      // this will explode if there is not positional argument to put this in
                      var (propertyInfo, argumentAttribute) = arguments.First(a => !a.Argument.IsSet);
+                     arg.AsYaml();
                      propertyInfo.SetValue(parameters, CoersionMap[propertyInfo.PropertyType](arg));
                      argumentAttribute.IsSet = true;
                   }
@@ -166,8 +171,12 @@ namespace Floatingman.CommandLineParser
             propertyInfo.SetValue(parameters, optionAttribute.Default);
 
          // test for required arguments
-         if (arguments.Any(o => !o.Argument.IsSet && o.Argument.IsRequired && o.Property.PropertyType != typeof(bool)))
-            throw new Exception("kaboom?");
+         foreach (var arg in arguments.Where(a => !a.Argument.IsSet
+           && a.Argument.IsRequired
+           && a.Property.PropertyType != typeof(bool)))
+         {
+            parameters.Errors.Add($"{arg.Argument.Name} is required");
+         }
 
          // set default values
          foreach (var (propertyInfo, argumentAttribute) in arguments.Where(o => !o.Argument.IsSet && o.Argument.Default != null))

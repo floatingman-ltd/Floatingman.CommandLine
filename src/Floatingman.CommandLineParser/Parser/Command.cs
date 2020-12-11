@@ -1,4 +1,6 @@
 ﻿
+using System;
+using System.Linq;
 using Floatingman.Common.Extensions;
 
 namespace Floatingman.CommandLineParser.Parser
@@ -12,7 +14,16 @@ namespace Floatingman.CommandLineParser.Parser
       public abstract string Execute(TParams args);
       public string Execute(string[] args)
       {
-         TParams p = Parse(args);
+         string[] fullArgs = null;
+         var hasStream =  Console.IsInputRedirected;//.In.Peek() != -1;
+         if (hasStream)
+         {
+            fullArgs = (args.Clone() as string[]).Concat(Console.In.ReadLine().Split(' ')).ToArray();
+         } else {
+            fullArgs = args.Clone() as string[];
+         }
+         // (new {fullArgs}).AsJson();
+         TParams p = Parse(fullArgs);
          if (p.Errors.Count == 0)
          {
             return Execute(p);

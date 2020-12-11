@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Floatingman.CommandLine.Com
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Floatingman.TopologyFunctions", "example\Floatingman.TopologyFunctions\Floatingman.TopologyFunctions.csproj", "{FD992FAA-64E6-44CD-9148-831D719638B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Floatingman.CommandLine.ToWkt", "example\Floatingman.CommandLine.ToWkt\Floatingman.CommandLine.ToWkt.csproj", "{DB695D96-9BAD-4AF2-AD29-83C8E4A07E39}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Floatingman.ToWkt.Command", "example\Floatingman.ToWkt.Command\Floatingman.ToWkt.Command.csproj", "{DB695D96-9BAD-4AF2-AD29-83C8E4A07E39}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
