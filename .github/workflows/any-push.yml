@@ -3,6 +3,8 @@ name: push to any
 on:
   workflow_dispatch:
   push:
+    branches-ignore:
+      [main]
 
 jobs:
   build:
