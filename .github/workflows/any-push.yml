@@ -1,0 +1,40 @@
+name: push to any
+
+on:
+  workflow_dispatch:
+  push:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.400
+    - name: Config nuget
+      run: >
+        dotnet nuget add source "https://nuget.pkg.github.com/floatingman-ltd/index.json" 
+        --name "GITHUB"
+        --username waltiam 
+        --password ${{ secrets.GITHUB_TOKEN }} 
+        --store-password-in-clear-text
+    - name: Install dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+    - name: Test and Coverage
+      # dotnet test src/Floatingman.CommandLineParser.Tests/Floatingman.CommandLineParser.Tests.csproj  /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=lcov
+      run: >
+        dotnet test src/Floatingman.CommandLineParser.Tests/Floatingman.CommandLineParser.Tests.csproj  
+        /p:CollectCoverage=true 
+        /p:CoverletOutput=TestResults/ 
+        /p:CoverletOutputFormat=lcov
+    - name: Publish coverage report to coveralls.io   
+      uses: coverallsapp/github-action@master   
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }} 
+        path-to-lcov: src/Floatingman.CommandLineParser.Tests/TestResults/coverage.info 

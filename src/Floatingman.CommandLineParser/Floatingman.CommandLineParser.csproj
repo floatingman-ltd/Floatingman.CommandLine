@@ -2,22 +2,16 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <Authors>Floatingman IT Consulting</Authors>
+    <Authors>Walt Speelman</Authors>
     <Company>Floatingman IT Consulting</Company>
     <Description>Command Line parser that allows for drop in verb modules.</Description>
-    <Version>0.1.2</Version>
-    <PackageLicenseExpression>WTFPL</PackageLicenseExpression>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Copyright>(c) 2020 Floatingman</Copyright>
-    <PackageProjectUrl>https://github.com/64-Code-Amusements/cli</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/64-Code-Amusements/cli</RepositoryUrl>
+      <RepositoryUrl>https://github.com/floatingman-ltd/Floatingman.CommandLine</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <AssemblyVersion>0.1.2.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Floatingman.Common" Version="0.0.2" />
+    <PackageReference Include="Floatingman.Common" Version="*" />
     <PackageReference Include="system.io.abstractions" Version="13.2.5" />
   </ItemGroup>
 

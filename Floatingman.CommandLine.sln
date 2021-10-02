@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Floatingman.CommandLineParser", "Floatingman.CommandLineParser\Floatingman.CommandLineParser.csproj", "{D5CAA54A-71D1-4564-A2E7-9C2152B8367D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Floatingman.CommandLineParser", "src\Floatingman.CommandLineParser\Floatingman.CommandLineParser.csproj", "{D5CAA54A-71D1-4564-A2E7-9C2152B8367D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Floatingman.CommandLineParser.xUnit", "Floatingman.CommandLineParser.xUnit\Floatingman.CommandLineParser.xUnit.csproj", "{B19ED948-8D0A-472F-9269-013A8CA39CA7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Floatingman.CommandLineParser.Tests", "src\Floatingman.CommandLineParser.Tests\Floatingman.CommandLineParser.Tests.csproj", "{B19ED948-8D0A-472F-9269-013A8CA39CA7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "example", "example", "{48F870AF-D125-437A-8ABF-561AC5650672}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Floatingman.CommandLine.Application", "example\Floatingman.CommandLine.Application\Floatingman.CommandLine.Application.csproj", "{371FA0EA-081F-440F-9A5E-0F9F601B59D7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Floatingman.CommandLine.Application", "src\example\Floatingman.CommandLine.Application\Floatingman.CommandLine.Application.csproj", "{371FA0EA-081F-440F-9A5E-0F9F601B59D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Floatingman.CommandLine.Command", "example\Floatingman.CommandLine.Command\Floatingman.CommandLine.Command.csproj", "{ED007159-083E-4E01-ABCC-32DEC5C4493C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Floatingman.CommandLine.Command", "src\example\Floatingman.CommandLine.Command\Floatingman.CommandLine.Command.csproj", "{ED007159-083E-4E01-ABCC-32DEC5C4493C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Floatingman.TopologyFunctions", "example\Floatingman.TopologyFunctions\Floatingman.TopologyFunctions.csproj", "{FD992FAA-64E6-44CD-9148-831D719638B5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Floatingman.TopologyFunctions", "src\example\Floatingman.TopologyFunctions\Floatingman.TopologyFunctions.csproj", "{FD992FAA-64E6-44CD-9148-831D719638B5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
