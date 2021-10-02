@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Floatingman.CommandLineParser", "Floatingman.CommandLineParser\Floatingman.CommandLineParser.csproj", "{D5CAA54A-71D1-4564-A2E7-9C2152B8367D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Floatingman.CommandLineParser", "src\Floatingman.CommandLineParser\Floatingman.CommandLineParser.csproj", "{D5CAA54A-71D1-4564-A2E7-9C2152B8367D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Floatingman.CommandLineParser.xUnit", "Floatingman.CommandLineParser.xUnit\Floatingman.CommandLineParser.xUnit.csproj", "{B19ED948-8D0A-472F-9269-013A8CA39CA7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Floatingman.CommandLineParser.Tests", "src\Floatingman.CommandLineParser.xUnit\Floatingman.CommandLineParser.Tests.csproj", "{B19ED948-8D0A-472F-9269-013A8CA39CA7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "example", "example", "{48F870AF-D125-437A-8ABF-561AC5650672}"
 EndProject
