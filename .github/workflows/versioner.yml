@@ -5,7 +5,7 @@ on:
 
 jobs:
 
-  internal-publish:
+  check-versioning:
     runs-on: ubuntu-latest
 
     steps:
