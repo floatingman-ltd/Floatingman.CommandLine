@@ -1,5 +1,11 @@
 # Command-Parser
 
+[![Coverage Status](https://coveralls.io/repos/github/floatingman-ltd/Floatingman.CommandLine/badge.svg?branch=main)](https://coveralls.io/github/floatingman-ltd/Floatingman.CommandLine?branch=main)
+[![BSD 1 Clause License](https://img.shields.io/badge/Licence-BSD_1_Clause-yellow.svg)](https://opensource.org/license/bsd-1-clause/)
+![Nuget](https://img.shields.io/nuget/dt/Floatingman.CommandLine)
+![GitHub release (with filter)](https://img.shields.io/github/v/release/floatingman-ltd/Floatingman.CommandLine)
+
+
 ![.NET Core](https://github.com/64-Code-Amusements/Floatingman.CommandLine/workflows/.NET%20Core/badge.svg)
 
 A command line parser - **console is the new UI**.

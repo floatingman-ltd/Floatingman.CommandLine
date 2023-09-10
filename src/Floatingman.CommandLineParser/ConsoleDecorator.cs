@@ -1,13 +1,7 @@
-using System;
-using System.Threading.Tasks;
 using System.Reflection;
-using System.Collections.Generic;
 
 using Floatingman.CommandLineParser.Parser;
-using System.IO;
-using System.Linq;
 using System.IO.Abstractions;
-using Floatingman.Common.Extensions;
 
 namespace Floatingman.CommandLineParser
 {
