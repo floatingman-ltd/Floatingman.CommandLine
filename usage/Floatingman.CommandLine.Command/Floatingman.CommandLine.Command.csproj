@@ -1,12 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Floatingman.CommandLineParser\Floatingman.CommandLineParser.csproj">
+      <ProjectReference
+         Include="..\..\src\Floatingman.CommandLineParser\Floatingman.CommandLineParser.csproj">
       <Private>false</Private>
       <ExcludeAssets>runtime</ExcludeAssets>
     </ProjectReference>
-    <ProjectReference Include="..\Floatingman.TopologyFunctions\Floatingman.TopologyFunctions.csproj" />
-    <ProjectReference Include="..\..\src\Floatingman.CommandLineParser\Floatingman.CommandLineParser.csproj" />
+      <ProjectReference
+         Include="..\Floatingman.TopologyFunctions\Floatingman.TopologyFunctions.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
