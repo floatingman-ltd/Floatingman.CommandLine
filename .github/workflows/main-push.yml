@@ -56,7 +56,7 @@ jobs:
           body: ${{ steps.tag_version.outputs.changelog }}
           generateReleaseNotes: true
       - name: Create Nuget Package
-        run: dotnet build -c Release ./src/Floatingman.CommandLineParser/Floatingman.CommandLineparser.csproj && dotnet pack -c Release -p:PackageVersion=${{ steps.tag_version.outputs.new_version }} -o . ./src/Floatingman.CommandLineParser/Floatingman.CommandLineparser.csproj
+        run: dotnet build -c Release ./src/Floatingman.CommandLineParser/Floatingman.CommandLineparser.csproj && dotnet pack -c Release -p:PackageVersion=${{ steps.tag_version.outputs.new_version }} -o . ./src/Floatingman.CommandLineParser/Floatingman.CommandLineParser.csproj
       - name: Upload Package for Publishing
         uses: actions/upload-artifact@v3
         with:
