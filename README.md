@@ -2,23 +2,27 @@
 
 [![Coverage Status](https://coveralls.io/repos/github/floatingman-ltd/Floatingman.CommandLine/badge.svg?branch=main)](https://coveralls.io/github/floatingman-ltd/Floatingman.CommandLine?branch=main)
 [![BSD 1 Clause License](https://img.shields.io/badge/Licence-BSD_1_Clause-yellow.svg)](https://opensource.org/license/bsd-1-clause/)
-![Nuget](https://img.shields.io/nuget/dt/Floatingman.CommandLine)
+[![Nuget](https://img.shields.io/nuget/dt/Floatingman.CommandLineParser)](https://www.nuget.org/packages/Floatingman.CommandLineParser/)
 ![GitHub release (with filter)](https://img.shields.io/github/v/release/floatingman-ltd/Floatingman.CommandLine)
-
-
-![.NET Core](https://github.com/64-Code-Amusements/Floatingman.CommandLine/workflows/.NET%20Core/badge.svg)
+![.NET Core](https://github.com/floatingman-ltd/Floatingman.CommandLine/workflows/.NET%20Core/badge.svg)
 
 A command line parser - **console is the new UI**.
 
-## Usage:
+## Is this the tooling needed?
 
-From the dotnet cli
+To start with, if are going down the road of building a ground up CLI tool you might be able to steal some ideas from this but this is a very opinionated piece of tooling.  What I was aiming for was a way to wrap libraries up and execute from the commandline.  The usage example uses a library that generates hexagon coordinates and outputs them in either WKT or GeoJson.
 
-```ps
-dotnet add package Floatingman.CommandLineParser --version 0.1.0
-```
+Three parts are needed to use this CLI tooling (in addiition to the tooling itself):
 
----
+- a library that contains the functionality that you will be exposing
+- a project that wraps the functionality aoe in a usable way and defines the command arguments
+- a console application that inherits from `ConsoleDecoator`
+
+The [external project]() implementation of this is the workin proo-of-concept.
+
+## Installation
+
+Really? it's a nuget package - [they got this covered](https://www.nuget.org/packages/Floatingman.CommandLineParser/).
 
 ## Anatomy of a command Line
 
