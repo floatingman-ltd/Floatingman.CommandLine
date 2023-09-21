@@ -18,7 +18,7 @@ Three parts are needed to use this CLI tooling (in addiition to the tooling itse
 - a project that wraps the functionality aoe in a usable way and defines the command arguments
 - a console application that inherits from `ConsoleDecoator`
 
-The [external project]() implementation of this is the workin proo-of-concept.
+The [external project]() implementation of this is the working proof-of-concept.
 
 ## Installation
 
